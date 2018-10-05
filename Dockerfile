@@ -1,7 +1,7 @@
 FROM python:3.7-alpine
 MAINTAINER Erignoux Laurent <lerignoux@gmail.com>
 
-MKDIR /app
+RUN mkdir /app
 ADD ./requirements.txt /app
 ADD ./main.py /app
 RUN cd app && pip3 install -r requirements.txt
