@@ -2,6 +2,7 @@ import argparse
 import logging
 import os
 
+from time import sleep
 from googleapiclient import discovery
 
 log = logging.getLogger(__name__)
@@ -19,9 +20,10 @@ def restart_instance(project, zone, instance):
     compute.instances().stop(project=project, zone=zone, instance=instance).execute()
     stopped = False
     while not stopped:
+        sleep(10)
         list = compute.instances().list(project=project, zone=zone).execute()['items']
-        instance = next((x for x in list if x['name'] == instance), None)
-        if instance['status'] == "TERMINATED":
+        data = next((x for x in list if x['name'] == instance), None)
+        if data['status'] == "TERMINATED":
             stopped = True
     return compute.instances().start(project=project, zone=zone, instance=instance).execute()
 
