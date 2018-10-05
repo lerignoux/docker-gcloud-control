@@ -19,7 +19,7 @@ def restart_instance(project, zone, instance):
     compute.instances().stop(project=project, zone=zone, instance=instance).execute()
     stopped = False
     while not stopped:
-        list = compute.instances().list(project=project, zone=zone, instance=instance).execute()['items']
+        list = compute.instances().list(project=project, zone=zone).execute()['items']
         instance = next((x for x in list if x['name'] == instance), None)
         if instance['status'] == "TERMINATED":
             stopped = True
